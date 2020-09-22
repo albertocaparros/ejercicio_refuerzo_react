@@ -1,0 +1,6 @@
+{
+  "prettier.endOfLine": "auto",
+  "eslint.codeAction.showDocumentation": {
+    "enable": true
+  }
+}
