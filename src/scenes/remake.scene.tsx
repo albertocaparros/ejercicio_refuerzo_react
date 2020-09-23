@@ -8,9 +8,6 @@ import { Link } from 'react-router-dom';
 export const RemakeScene: React.FC = () => {
   return (
     <>
-      <Tab label="Original" component={Link} to={switchRoutes.original}></Tab>
-      <Tab label="Remake" component={Link} to={switchRoutes.remake}></Tab>
-
       <ContainerLayout>
         <RemakeContainer />
       </ContainerLayout>

@@ -1,17 +1,28 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
-import SportsEsportsIcon from '@material-ui/icons/SportsEsports';
-import { List, ListItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import {
+  IconButton,
+  List,
+  ListItem,
+  ListItemSecondaryAction,
+  ListItemText,
+  Typography,
+} from '@material-ui/core';
 import ShopContext from 'core/shop/shop.context';
 import { CarroComponent } from 'pods/carro';
+import { Divider } from '@material-ui/core';
+import DeleteIcon from '@material-ui/icons/Delete';
+import CloseIcon from '@material-ui/icons/Close';
+import MenuOpenIcon from '@material-ui/icons/MenuOpen';
 
 const useStyles = makeStyles(() =>
   createStyles({
     root: {
       width: '100%',
-      maxWidth: 500,
-      backgroundColor: '#a6d4fa',
-      minHeight: '500px',
+      backgroundColor: '#c8e4fb',
+      minHeight: '600px',
+      marginTop: '15px',
+      border: '1px black solid',
     },
   })
 );
@@ -19,28 +30,85 @@ const useStyles = makeStyles(() =>
 export const CarroContainer: React.FC = () => {
   const classes = useStyles();
   const shopContext = useContext(ShopContext);
-  const { shopCart } = shopContext;
+  const { shopCart, emptyList } = shopContext;
+  const [display, setDisplay] = useState(false);
+
+  const changeDisplay = () => {
+    setDisplay(!display);
+  };
 
   return (
-    <div className={classes.root}>
-      <List>
-        <ListItem>
-          <ListItemIcon>
-            <SportsEsportsIcon />
-          </ListItemIcon>
-          <ListItemText primary="Equipo de combate" />
-        </ListItem>
-        {shopCart
-          ? shopCart.map(shopItem => {
-              return (
-                <CarroComponent
-                  key={shopItem.id}
-                  {...shopItem}
-                ></CarroComponent>
-              );
-            })
-          : null}
-      </List>
-    </div>
+    <>
+      {display ? (
+        <IconButton edge="end" aria-label="delete" onClick={changeDisplay}>
+          <MenuOpenIcon />
+        </IconButton>
+      ) : (
+        <IconButton edge="end" aria-label="delete" onClick={changeDisplay}>
+          <CloseIcon />
+        </IconButton>
+      )}
+      <div className={classes.root} hidden={display}>
+        <List>
+          <ListItem>
+            <ListItemText
+              inset={true}
+              primary={
+                <>
+                  <Typography component="span" variant="h6" color="textPrimary">
+                    Equipo
+                  </Typography>
+                </>
+              }
+            ></ListItemText>
+          </ListItem>
+          <Divider></Divider>
+          {shopCart
+            ? shopCart.map(shopItem => {
+                return (
+                  <CarroComponent
+                    key={shopItem.id}
+                    {...shopItem}
+                  ></CarroComponent>
+                );
+              })
+            : null}
+          {shopCart && shopCart.length > 0 ? (
+            <>
+              <Divider></Divider>
+              <ListItem>
+                <ListItemText primary="Borrar lista" />
+                <ListItemSecondaryAction>
+                  <IconButton
+                    edge="end"
+                    aria-label="delete"
+                    onClick={emptyList}
+                  >
+                    <DeleteIcon />
+                  </IconButton>
+                </ListItemSecondaryAction>
+              </ListItem>
+            </>
+          ) : (
+            <ListItem>
+              <ListItemText
+                inset={true}
+                primary={
+                  <>
+                    <Typography
+                      component="span"
+                      variant="inherit"
+                      color="textPrimary"
+                    >
+                      Añade miembros al equipo!
+                    </Typography>
+                  </>
+                }
+              ></ListItemText>
+            </ListItem>
+          )}
+        </List>
+      </div>
+    </>
   );
 };

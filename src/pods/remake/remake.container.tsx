@@ -13,7 +13,7 @@ export const RemakeContainer: React.FC = () => {
     <>
       {info
         ? info.map(tarjeta => {
-            return <RemakeComponent {...tarjeta} />;
+            return <RemakeComponent key={tarjeta.id} {...tarjeta} />;
           })
         : null}
     </>

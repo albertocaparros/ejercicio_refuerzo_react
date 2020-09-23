@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 //import { Link } from 'react-router-dom';
 //import { switchRoutes } from 'core/router';
 import { makeStyles } from '@material-ui/core/styles';
@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Checkbox from '@material-ui/core/Checkbox';
 import Typography from '@material-ui/core/Typography';
+import ShopContext from 'core/shop/shop.context';
 
 const useStyles = makeStyles({
   root: {
@@ -29,16 +30,29 @@ interface Props {
 }
 
 export const RemakeComponent: React.FunctionComponent<Props> = ({
+  id,
   picUrl,
   name,
 }) => {
   const classes = useStyles();
+  const shopContext = useContext(ShopContext);
+  const { isInCart, addShopItem, removeShopItem } = shopContext;
+
+  const handleChange = () => {
+    if (!isInCart(id)) addShopItem({ id, name, picUrl });
+    else removeShopItem(id);
+  };
 
   return (
     <>
       <Card className={classes.root}>
         <CardActionArea>
-          <CardMedia className={classes.media} image={picUrl} title={name} />
+          <CardMedia
+            className={classes.media}
+            image={picUrl}
+            title={name}
+            onClick={handleChange}
+          />
           <CardContent>
             <Typography gutterBottom variant="h5" component="h2">
               {name}
@@ -47,10 +61,11 @@ export const RemakeComponent: React.FunctionComponent<Props> = ({
         </CardActionArea>
         <CardActions>
           <Checkbox
-            defaultChecked
+            checked={isInCart(id)}
             color="primary"
             inputProps={{ 'aria-label': 'secondary checkbox' }}
-          />{' '}
+            onChange={handleChange}
+          />
           <Typography variant="h6" gutterBottom>
             En el equipo
           </Typography>

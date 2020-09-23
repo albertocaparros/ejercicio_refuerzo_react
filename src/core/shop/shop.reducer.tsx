@@ -1,4 +1,4 @@
-import { ADD_SHOPITEM, DELETE_SHOPITEM } from './types';
+import { ADD_SHOPITEM, DELETE_SHOPITEM, EMPTY_LIST } from './types';
 
 export default (state, action) => {
   switch (action.type) {
@@ -13,6 +13,11 @@ export default (state, action) => {
         shopCart: state.shopCart.filter(
           shopItem => shopItem.id !== action.payload
         ),
+      };
+    case EMPTY_LIST:
+      return {
+        ...state,
+        shopCart: [],
       };
     default:
       return state;

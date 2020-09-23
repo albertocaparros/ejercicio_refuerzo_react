@@ -1,2 +1,3 @@
 export const ADD_SHOPITEM = 'ADD_SHOPITEM';
 export const DELETE_SHOPITEM = 'DELETE_SHOPITEM';
+export const EMPTY_LIST = 'EMPTY_LIST';

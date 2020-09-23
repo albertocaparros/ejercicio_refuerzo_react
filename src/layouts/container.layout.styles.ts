@@ -5,12 +5,12 @@ export const root = css`
   display: grid;
   grid-template-columns: auto;
   align-items: center;
-  justify-items: center;
-  @media (min-width: ${theme.breakpoints.values.sm}px) {
+  grid-row: 1 / 4;
+  @media (min-width: ${theme.breakpoints.values.md}px) {
     grid-template-columns: auto auto;
   }
 
-  @media (min-width: ${theme.breakpoints.values.md}px) {
+  @media (min-width: ${theme.breakpoints.values.lg}px) {
     grid-template-columns: auto auto auto;
   }
 `;

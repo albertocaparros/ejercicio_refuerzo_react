@@ -4,12 +4,14 @@ import { switchRoutes } from './routes';
 import { OriginalScene, RemakeScene } from 'scenes';
 import { AppLayout } from 'layouts';
 import { CarroContainer } from 'pods/carro';
+import { Navegacion } from 'pods/navegacion';
 
 export const RouterComponent: React.FunctionComponent = () => {
   return (
     <Fragment>
-      <AppLayout>
-        <Router>
+      <Router>
+        <Navegacion></Navegacion>
+        <AppLayout>
           <Switch>
             <Route
               exact={true}
@@ -27,9 +29,9 @@ export const RouterComponent: React.FunctionComponent = () => {
               component={RemakeScene}
             />
           </Switch>
-        </Router>
-        <CarroContainer />
-      </AppLayout>
+          <CarroContainer />
+        </AppLayout>
+      </Router>
     </Fragment>
   );
 };
